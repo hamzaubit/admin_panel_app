@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:admin_panel_app/widgets/siceConfig.dart';
+import 'package:admin_panel_app/widgets/widgets.dart';
 import 'package:animated_background/animated_background.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
@@ -29,6 +30,10 @@ class CsvToListState extends State<CsvToList> {
   String? _extension="csv";
   FileType _pickingType = FileType.custom;
   bool loader = false;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController collection = new TextEditingController();
+  bool errorText = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -82,7 +87,22 @@ class CsvToListState extends State<CsvToList> {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: (){
-                      _openFileExplorer();
+                      if(collection.text == ""){
+                        setState(() {
+                          errorText = true;
+                        });
+                      }
+                      else{
+                        setState(() {
+                          errorText = false;
+                          collection.clear();
+                          final snackBar = SnackBar(
+                              backgroundColor: Color(0xff021524),
+                              content: const Text('Category Added To The Firebase',style: TextStyle(color: Colors.white),
+                              ));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      }
                     },
                     child: Container(
                         height: SizeConfig.blockSizeVertical! * 6,
@@ -95,7 +115,7 @@ class CsvToListState extends State<CsvToList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             loader ? Center(child: CircularProgressIndicator(color: Color(0xff021524),)) : Text(
-                              "Import To Firebase",
+                              "Post To Firebase",
                               style: GoogleFonts.poppins(
                                   fontSize: SizeConfig.blockSizeHorizontal! * 4,
                                   color: Colors.white),
@@ -106,8 +126,44 @@ class CsvToListState extends State<CsvToList> {
                 ),
               ],
             ),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox( height: SizeConfig.blockSizeVertical! * 3,),
+                  Text(
+                    "Add Category",
+                    style: GoogleFonts.poppins(
+                        fontSize: SizeConfig.blockSizeHorizontal! * 4.5,
+                        color:  Color(0xff021524)),
+                  ),
+                  SizedBox( height: SizeConfig.blockSizeVertical! * 2,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: TextFormField(
+                      controller: collection,
+                      style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize:
+                          SizeConfig.blockSizeHorizontal! * 3.5),
+                      cursorColor: Colors.white,
+                      decoration: myDecoration('Add Collection Name'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical! * 2,
+                  ),
+                  errorText ? Text(
+                    "Empty Text Field",
+                    style: GoogleFonts.poppins(
+                        fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+                        color:  Color(0xff021524)),
+                  ) : SizedBox(),
+                ],
+              ),
+            ),
             Container(
-            height: SizeConfig.blockSizeVertical! * 90,
+            height: SizeConfig.blockSizeVertical! * 60,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -137,6 +193,7 @@ class CsvToListState extends State<CsvToList> {
                                 fontSize: SizeConfig.blockSizeHorizontal! * 4,
                                 color: Color(0xff021524)),
                           ),
+
                           Divider(thickness: 4,),
                         ],
                       ),
