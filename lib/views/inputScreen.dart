@@ -117,7 +117,7 @@ class CsvToListState extends State<CsvToList> {
                       } else {
                         setState(() {
                           errorText = false;
-                          for(int i = 1 ; i <= 10 ; i++){
+                          for(int i = 1 ; i < employeeData.length ; i++){
                             addDataToFirebase(employeeData[i][1].toString(),employeeData[i][2].toString(),i.toString());
                           }
                           final snackBar = SnackBar(
