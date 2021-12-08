@@ -1,0 +1,171 @@
+{
+  "project_info": {
+    "project_number": "814624387284",
+    "firebase_url": "https://quotesapp-b19d6-default-rtdb.firebaseio.com",
+    "project_id": "quotesapp-b19d6",
+    "storage_bucket": "quotesapp-b19d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814624387284:android:b57f9e0feea5e6e6e74b41",
+        "android_client_info": {
+          "package_name": "com.example.admin_panel_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814624387284-p88fue0m2bfi1kmh0gdrkd3u3elqsium.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin_panel_app",
+            "certificate_hash": "7a789cc97829009d1dfad133c381504d4cfb82c8"
+          }
+        },
+        {
+          "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00GYHS_X5y9kLcuEiMMARzCcH9-7hPvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814624387284-r06kk367j9ipo424jt4dshor17t6ckov.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sk.quotes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814624387284:android:1e3270188db77078e74b41",
+        "android_client_info": {
+          "package_name": "com.example.daytofortune_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814624387284-0dd4ji3sijdfs2flgdtt9s28bvg4ulgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.daytofortune_app",
+            "certificate_hash": "7a789cc97829009d1dfad133c381504d4cfb82c8"
+          }
+        },
+        {
+          "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00GYHS_X5y9kLcuEiMMARzCcH9-7hPvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814624387284-r06kk367j9ipo424jt4dshor17t6ckov.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sk.quotes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814624387284:android:67f27771c21c85bfe74b41",
+        "android_client_info": {
+          "package_name": "com.sk.daytofortune"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00GYHS_X5y9kLcuEiMMARzCcH9-7hPvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814624387284-r06kk367j9ipo424jt4dshor17t6ckov.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sk.quotes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814624387284:android:f918fe0dea677142e74b41",
+        "android_client_info": {
+          "package_name": "com.sk.quotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00GYHS_X5y9kLcuEiMMARzCcH9-7hPvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814624387284-rusb16feqgkr1k8po3g5u84natc2lc4i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "814624387284-r06kk367j9ipo424jt4dshor17t6ckov.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sk.quotes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

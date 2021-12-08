@@ -3,31 +3,31 @@ import 'dart:io';
 import 'package:admin_panel_app/widgets/siceConfig.dart';
 import 'package:admin_panel_app/widgets/widgets.dart';
 import 'package:animated_background/animated_background.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CsvToList extends StatefulWidget{
-
+class CsvToList extends StatefulWidget {
   String? title;
+
   CsvToList(this.title);
 
   @override
   State<StatefulWidget> createState() {
-
     return CsvToListState();
   }
-
 }
+
 class CsvToListState extends State<CsvToList> {
   late List<List<dynamic>> employeeData;
 
   //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<PlatformFile>? _paths;
-  String? _extension="csv";
+  String? _extension = "csv";
   FileType _pickingType = FileType.custom;
   bool loader = false;
   final _formKey = GlobalKey<FormState>();
@@ -38,8 +38,23 @@ class CsvToListState extends State<CsvToList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    employeeData  = List<List<dynamic>>.empty(growable: true);
+    employeeData = List<List<dynamic>>.empty(growable: true);
   }
+
+  addDataToFirebase(String author , String quote, String doc) async {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('quotesCategories')
+        .doc('quotes')
+        .collection(collection.text)
+        .doc(doc)
+        ..set({
+        "author": author,
+        "quote": quote,
+      }).then((_) {
+        print("success!");
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -53,14 +68,16 @@ class CsvToListState extends State<CsvToList> {
         ),
         body: ListView(
           children: [
-            SizedBox(height: SizeConfig.blockSizeVertical! * 4,),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical! * 4,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _openFileExplorer();
                     },
                     child: Container(
@@ -69,16 +86,22 @@ class CsvToListState extends State<CsvToList> {
                         decoration: BoxDecoration(
                             color: Color(0xff021524),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(30))),
+                                BorderRadius.all(Radius.circular(30))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            loader ? Center(child: CircularProgressIndicator(color: Color(0xff021524),)) : Text(
-                              "Import File",
-                              style: GoogleFonts.poppins(
-                                  fontSize: SizeConfig.blockSizeHorizontal! * 4,
-                                  color: Colors.white),
-                            ),
+                            loader
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    color: Color(0xff021524),
+                                  ))
+                                : Text(
+                                    "Import File",
+                                    style: GoogleFonts.poppins(
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! * 4,
+                                        color: Colors.white),
+                                  ),
                           ],
                         )),
                   ),
@@ -86,21 +109,25 @@ class CsvToListState extends State<CsvToList> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
-                    onTap: (){
-                      if(collection.text == ""){
+                    onTap: () {
+                      if (collection.text == "") {
                         setState(() {
                           errorText = true;
                         });
-                      }
-                      else{
+                      } else {
                         setState(() {
                           errorText = false;
-                          collection.clear();
+                          for(int i = 1 ; i <= 10 ; i++){
+                            addDataToFirebase(employeeData[i][1].toString(),employeeData[i][2].toString(),i.toString());
+                          }
                           final snackBar = SnackBar(
                               backgroundColor: Color(0xff021524),
-                              content: const Text('Category Added To The Firebase',style: TextStyle(color: Colors.white),
+                              content: const Text(
+                                'Category Added To The Firebase',
+                                style: TextStyle(color: Colors.white),
                               ));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          collection.clear();
                         });
                       }
                     },
@@ -110,16 +137,22 @@ class CsvToListState extends State<CsvToList> {
                         decoration: BoxDecoration(
                             color: Color(0xff021524),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(30))),
+                                BorderRadius.all(Radius.circular(30))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            loader ? Center(child: CircularProgressIndicator(color: Color(0xff021524),)) : Text(
-                              "Post To Firebase",
-                              style: GoogleFonts.poppins(
-                                  fontSize: SizeConfig.blockSizeHorizontal! * 4,
-                                  color: Colors.white),
-                            ),
+                            loader
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    color: Color(0xff021524),
+                                  ))
+                                : Text(
+                                    "Post To Firebase",
+                                    style: GoogleFonts.poppins(
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! * 4,
+                                        color: Colors.white),
+                                  ),
                           ],
                         )),
                   ),
@@ -130,22 +163,25 @@ class CsvToListState extends State<CsvToList> {
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox( height: SizeConfig.blockSizeVertical! * 3,),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical! * 3,
+                  ),
                   Text(
                     "Add Category",
                     style: GoogleFonts.poppins(
                         fontSize: SizeConfig.blockSizeHorizontal! * 4.5,
-                        color:  Color(0xff021524)),
+                        color: Color(0xff021524)),
                   ),
-                  SizedBox( height: SizeConfig.blockSizeVertical! * 2,),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical! * 2,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 30, right: 30),
                     child: TextFormField(
                       controller: collection,
                       style: GoogleFonts.poppins(
                           color: Colors.white,
-                          fontSize:
-                          SizeConfig.blockSizeHorizontal! * 3.5),
+                          fontSize: SizeConfig.blockSizeHorizontal! * 3.5),
                       cursorColor: Colors.white,
                       decoration: myDecoration('Add Collection Name'),
                     ),
@@ -153,24 +189,27 @@ class CsvToListState extends State<CsvToList> {
                   SizedBox(
                     height: SizeConfig.blockSizeVertical! * 2,
                   ),
-                  errorText ? Text(
-                    "Empty Text Field",
-                    style: GoogleFonts.poppins(
-                        fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
-                        color:  Color(0xff021524)),
-                  ) : SizedBox(),
+                  errorText
+                      ? Text(
+                          "Empty Text Field",
+                          style: GoogleFonts.poppins(
+                              fontSize: SizeConfig.blockSizeHorizontal! * 3.5,
+                              color: Color(0xff021524)),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
             Container(
-            height: SizeConfig.blockSizeVertical! * 60,
+              height: SizeConfig.blockSizeVertical! * 60,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: employeeData.length,
-                  itemBuilder: (context,index){
+                  itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,8 +232,9 @@ class CsvToListState extends State<CsvToList> {
                                 fontSize: SizeConfig.blockSizeHorizontal! * 4,
                                 color: Color(0xff021524)),
                           ),
-
-                          Divider(thickness: 4,),
+                          Divider(
+                            thickness: 4,
+                          ),
                         ],
                       ),
                     );
@@ -205,21 +245,23 @@ class CsvToListState extends State<CsvToList> {
       ),
     );
   }
+
   openFile(filepath) async {
     File f = new File(filepath);
     print("CSV to List");
     final input = f.openRead();
-    final fields = await input.transform(utf8.decoder).transform(new CsvToListConverter()).toList();
-    print(fields);
+    final fields = await input
+        .transform(utf8.decoder)
+        .transform(new CsvToListConverter())
+        .toList();
+    print("My Data ${fields}");
     setState(() {
-      employeeData=fields;
+      employeeData = fields;
     });
   }
 
   void _openFileExplorer() async {
-
     try {
-
       _paths = (await FilePicker.platform.pickFiles(
         type: _pickingType,
         allowMultiple: false,
@@ -239,11 +281,9 @@ class CsvToListState extends State<CsvToList> {
       print(_paths);
       print("File path ${_paths![0]}");
       print(_paths!.first.extension);
-
     });
   }
 }
-
 
 /*
 SizedBox(height: SizeConfig.blockSizeVertical! * 4,),
