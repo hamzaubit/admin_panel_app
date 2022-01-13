@@ -1,3 +1,5 @@
+import 'package:admin_panel_app/views/homeScreen.dart';
+import 'package:admin_panel_app/views/inputScreen.dart';
 import 'package:admin_panel_app/views/loginPage.dart';
 import 'package:admin_panel_app/views/splashScreen.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: splashScreen(),
+      home: homeScreen(),
     );
   }
 }

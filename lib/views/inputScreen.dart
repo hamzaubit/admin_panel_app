@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show PlatformException, rootBundle;
 import 'package:google_fonts/google_fonts.dart';
 
 class CsvToList extends StatefulWidget {
@@ -24,7 +24,7 @@ class CsvToList extends StatefulWidget {
 class CsvToListState extends State<CsvToList> {
   late List<List<dynamic>> employeeData;
 
-  //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<PlatformFile>? _paths;
   String? _extension = "csv";
@@ -46,7 +46,7 @@ class CsvToListState extends State<CsvToList> {
         .collection('quotesCategories')
         .doc('quotes')
         .collection(collection.text)
-        .doc(doc)
+        .doc()
         ..set({
         "author": author,
         "quote": quote,
@@ -204,7 +204,6 @@ class CsvToListState extends State<CsvToList> {
               height: SizeConfig.blockSizeVertical! * 60,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
-                  scrollDirection: Axis.vertical,
                   itemCount: employeeData.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -257,6 +256,7 @@ class CsvToListState extends State<CsvToList> {
     print("My Data ${fields}");
     setState(() {
       employeeData = fields;
+      print("Total Data Length : ${employeeData.length}");
     });
   }
 
@@ -285,62 +285,82 @@ class CsvToListState extends State<CsvToList> {
   }
 }
 
-/*
-SizedBox(height: SizeConfig.blockSizeVertical! * 4,),
-Row(
-mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-children: [
-Padding(
-padding: const EdgeInsets.all(8.0),
-child: GestureDetector(
-onTap: (){
-_openFileExplorer();
-},
-child: Container(
-height: SizeConfig.blockSizeVertical! * 6,
-width: SizeConfig.blockSizeHorizontal! * 45,
-decoration: BoxDecoration(
-color: Color(0xff021524),
-borderRadius:
-BorderRadius.all(Radius.circular(30))),
-child: Row(
-mainAxisAlignment: MainAxisAlignment.center,
-children: [
-loader ? Center(child: CircularProgressIndicator(color: Color(0xff021524),)) : Text(
-"Import File",
-style: GoogleFonts.poppins(
-fontSize: SizeConfig.blockSizeHorizontal! * 4,
-color: Colors.white),
-),
-],
-)),
-),
-),
-Padding(
-padding: const EdgeInsets.all(8.0),
-child: GestureDetector(
-onTap: (){
-_openFileExplorer();
-},
-child: Container(
-height: SizeConfig.blockSizeVertical! * 6,
-width: SizeConfig.blockSizeHorizontal! * 45,
-decoration: BoxDecoration(
-color: Color(0xff021524),
-borderRadius:
-BorderRadius.all(Radius.circular(30))),
-child: Row(
-mainAxisAlignment: MainAxisAlignment.center,
-children: [
-loader ? Center(child: CircularProgressIndicator(color: Color(0xff021524),)) : Text(
-"Import To Firebase",
-style: GoogleFonts.poppins(
-fontSize: SizeConfig.blockSizeHorizontal! * 4,
-color: Colors.white),
-),
-],
-)),
-),
-),
-],
-),*/
+/*class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<List<dynamic>> _data = [];
+
+  addDataToFirebase(String author , String quote, String doc) async {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('quotesCategories')
+        .doc('quotes')
+        .collection('Wisdom')
+        .doc()
+      ..set({
+        "author": author,
+        "quote": quote,
+      }).then((_) {
+        print("success!");
+      });
+  }
+
+  // This function is triggered when the floating button is pressed
+  void _loadCSV() async {
+    final _rawData = await rootBundle.loadString("assets/kindacode.csv");
+    List<List<dynamic>> _listData = CsvToListConverter().convert(_rawData);
+    setState(() {
+      _data = _listData;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Kindacode.com"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: GestureDetector(
+              onTap: (){
+                for(int i = 1 ; i < _data.length ; i++){
+                  addDataToFirebase(_data[i][2].toString(),_data[i][1].toString(),i.toString());
+                }
+                final snackBar = SnackBar(
+                    backgroundColor: Color(0xff021524),
+                    content: const Text(
+                      'Category Added To The Firebase',
+                      style: TextStyle(color: Colors.white),
+                    ));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+                child: Icon(Icons.add,color: Colors.white,size: 30,)),
+          )
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: _data.length,
+        itemBuilder: (_, index) {
+          return Card(
+            margin: const EdgeInsets.all(3),
+            color: index == 0 ? Colors.amber : Colors.white,
+            child: ListTile(
+              leading: Text(_data[index][0].toString()),
+              title: Text(_data[index][1]),
+              trailing: Text(_data[index][2].toString()),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          _loadCSV();
+        },
+      ),
+    );
+  }
+}*/

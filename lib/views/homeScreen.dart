@@ -36,19 +36,19 @@ class _homeScreenState extends State<homeScreen> with TickerProviderStateMixin {
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Quotes")));
+               Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Quotes")));
               },
               child: myQuoteTile("Adding Quotes"),
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Audios")));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Audios")));
               },
               child: myQuoteTile("Adding Audios"),
             ),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Videos")));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Videos")));
               },
               child: myQuoteTile("Adding Videos"),
             ),
