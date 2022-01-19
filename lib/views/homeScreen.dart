@@ -1,3 +1,4 @@
+import 'package:admin_panel_app/views/videoInput.dart';
 import 'package:admin_panel_app/widgets/siceConfig.dart';
 import 'package:admin_panel_app/widgets/widgets.dart';
 import 'package:animated_background/animated_background.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'addCategories.dart';
+import 'audioInput.dart';
 import 'inputScreen.dart';
 
 class homeScreen extends StatefulWidget {
@@ -42,13 +44,13 @@ class _homeScreenState extends State<homeScreen> with TickerProviderStateMixin {
             ),
             GestureDetector(
               onTap: (){
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Audios")));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => audioInput("Audios")));
               },
               child: myQuoteTile("Adding Audios"),
             ),
             GestureDetector(
               onTap: (){
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => CsvToList("Videos")));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => videoInput("Videos")));
               },
               child: myQuoteTile("Adding Videos"),
             ),
